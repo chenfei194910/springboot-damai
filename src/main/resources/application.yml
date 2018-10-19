@@ -1,24 +1,77 @@
+logging:
+  config: classpath:logback.xml
+  path: f:/logs
 server:
-  port: 8081
-  context-path: /damai
+  port: 80
+  session-timeout: 60
 
-spring:
-  datasource:
-    master:
-      driver-class-name: com.mysql.jdbc.Driver
-      jdbcUrl: jdbc:mysql://localhost:3306/damai?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
-      username: root
-      password: 123456
-    slave:
-      driver-class-name: com.mysql.jdbc.Driver
-      jdbcUrl: jdbc:mysql://localhost:3306/damai1?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
-      username: root
-      password: 123456
-    other:
-      driver-Class-Name: com.mysql.jdbc.Driver
-      jdbcUrl: jdbc:mysql://localhost:3306/damai?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
-      username: root
-      password: 123456
+
 mybatis:
-  type-aliases-package: com.damai.system.entity
-  mapper-locations: classpath*:mapping/*Mapper.xml
+     mapperLocations: classpath:/com/springboot/three/dao/*.xml
+     typeAliasesPackage: com.springboot.three.dao
+     mapperScanPackage: com.springboot.three.dao
+     configLocation: classpath:/mybatis-config.xml
+
+mysql:
+    datasource:
+        readSize: 2  #读库个数
+        type: com.alibaba.druid.pool.DruidDataSource
+        mapperLocations: classpath:/com/springboot/three/dao/*.xml
+        configLocation: classpath:/mybatis-config.xml
+        write:
+           url: jdbc:mysql://127.0.0.1:3306/damai?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
+           username: root
+           password: 123456
+           driver-class-name: com.mysql.jdbc.Driver
+           minIdle: 5
+           maxActive: 100
+           initialSize: 10
+           maxWait: 60000
+           timeBetweenEvictionRunsMillis: 60000
+           minEvictableIdleTimeMillis: 300000
+           validationQuery: select 'x'
+           testWhileIdle: true
+           testOnBorrow: false
+           testOnReturn: false
+           poolPreparedStatements: true
+           maxPoolPreparedStatementPerConnectionSize: 50
+           removeAbandoned: true
+           filters: stat
+        read01:
+           url: jdbc:mysql://127.0.0.1:3307/damai?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
+           username: root
+           password: 123456
+           driver-class-name: com.mysql.jdbc.Driver
+           minIdle: 5
+           maxActive: 100
+           initialSize: 10
+           maxWait: 60000
+           timeBetweenEvictionRunsMillis: 60000
+           minEvictableIdleTimeMillis: 300000
+           validationQuery: select 'x'
+           testWhileIdle: true
+           testOnBorrow: false
+           testOnReturn: false
+           poolPreparedStatements: true
+           maxPoolPreparedStatementPerConnectionSize: 50
+           removeAbandoned: true
+           filters: stat
+        read02:
+           url: jdbc:mysql://127.0.0.1:3308/damai?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
+           username: root
+           password: 123456
+           driver-class-name: com.mysql.jdbc.Driver
+           minIdle: 5
+           maxActive: 100
+           initialSize: 10
+           maxWait: 60000
+           timeBetweenEvictionRunsMillis: 60000
+           minEvictableIdleTimeMillis: 300000
+           validationQuery: select 'x'
+           testWhileIdle: true
+           testOnBorrow: false
+           testOnReturn: false
+           poolPreparedStatements: true
+           maxPoolPreparedStatementPerConnectionSize: 50
+           removeAbandoned: true
+           filters: stat  
