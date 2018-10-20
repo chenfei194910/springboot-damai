@@ -23,10 +23,14 @@ public class DataSourceConfiguration {
 	@Value("${mysql.datasource.type}")
 	private Class<? extends DataSource> dataSourceType;
 
+
 	/**
 	 * 写库 数据源配置
-	 * 
-	 * @return
+	 * @Title: writeDataSource
+	 * @Description: TODO
+	 * @param: 
+	 * @return: DataSource  
+	 * @throws:
 	 */
 	@Bean(name = "writeDataSource")
 	@Primary
@@ -37,7 +41,7 @@ public class DataSourceConfiguration {
 	}
 
 	/**
-	 * 有多少个从库就要配置多少个
+	  * 有多少个从库就要配置多少个
 	 * 
 	 * @return
 	 */

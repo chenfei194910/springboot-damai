@@ -111,4 +111,45 @@ public class UserController {
 		return sb.toString();
 	}
 	
+	
+	/**
+	 * 测试controller一个方法里面多个查询是否查询的是同一个库
+	 * @return
+	 */
+	@RequestMapping("/queryUser")
+	@ResponseBody
+	public String queryUser(){
+		
+		
+		User user = userService.findById("1");
+		log.info("findById --- id:" + user.getId());
+		
+		PageInfo<User> page = userService.queryPage("a", 1, 2);
+		StringBuilder sb = new StringBuilder();
+		sb.append("<br/>总页数=" + page.getPages());
+		sb.append("<br/>总记录数=" + page.getTotal()) ;
+		for(User u : page.getList()){
+			sb.append("<br/>" + u.getId() + "      " + u.getUserName());
+		}
+		System.out.println("分页查询....\n" + sb.toString());
+		return sb.toString();
+	}
+	
+	/**
+	 * 测试Service一个方法里面多个查询是否查询的是同一个库
+	 * @return
+	 */
+	@RequestMapping("/queryOneAndPage")
+	@ResponseBody
+	public String queryOneAndPage(){
+		PageInfo<User> page = userService.queryOneAndPage("a", 1, 2);
+		StringBuilder sb = new StringBuilder();
+		sb.append("<br/>总页数=" + page.getPages());
+		sb.append("<br/>总记录数=" + page.getTotal()) ;
+		for(User u : page.getList()){
+			sb.append("<br/>" + u.getId() + "      " + u.getUserName());
+		}
+		System.out.println("分页查询....\n" + sb.toString());
+		return sb.toString();
+	}
 }

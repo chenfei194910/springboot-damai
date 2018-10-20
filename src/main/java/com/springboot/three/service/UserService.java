@@ -30,7 +30,7 @@ import com.springboot.three.util.SpringContextUtil;
  *
  */
 @Service
-//@Transactional
+@Transactional
 public class UserService {
 
 	private static Logger log = LoggerFactory.getLogger(UserService.class);
@@ -39,7 +39,7 @@ public class UserService {
 	private UserMapper userMapper;
 	
 	@WriteDataSource
-	@Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.DEFAULT,readOnly=false)
+//	@Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.DEFAULT,readOnly=false)
 	public void insertUser(User u){
 		userMapper.insert(u);
 	
@@ -73,7 +73,7 @@ public class UserService {
 		throw new RuntimeException("测试 写事务里面调用读事务");
 	}
 	
-	@ReadDataSource
+//	@ReadDataSource
 	public User findById(String id){
 		User u = userMapper.findById(id);
 		return u;
@@ -82,6 +82,19 @@ public class UserService {
 	
 	//@ReadDataSource
 	public PageInfo<User> queryPage(String userName,int pageNum,int pageSize){
+		Page<User> page = PageHelper.startPage(pageNum, pageSize);
+		//PageHelper会自动拦截到下面这查询sql
+		userMapper.query(userName);
+		return page.toPageInfo();
+	}
+	
+	
+	
+	@ReadDataSource
+	public PageInfo<User> queryOneAndPage(String userName,int pageNum,int pageSize){
+		User user = userMapper.findById("1");
+		log.info("findById --- id:" + user.getId());
+		
 		Page<User> page = PageHelper.startPage(pageNum, pageSize);
 		//PageHelper会自动拦截到下面这查询sql
 		userMapper.query(userName);

@@ -56,15 +56,17 @@ private static Logger log = LoggerFactory.getLogger(DataSourceAopInService.class
     
 
 	@Before("execution(* com.springboot.three.service..*.*(..)) "
-			+ " and @annotation(com.springboot.three.annotation.ReadDataSource) ")
+			+ " or @annotation(com.springboot.three.annotation.ReadDataSource) "
+			+ " or @annotation(com.springboot.three.annotation.WriteDataSource) ")
 	public void setReadDataSourceType(JoinPoint joinPoint) {
         try {
-
         	//如果已经开启写事务了，那之后的所有读都从写库读
     	if (getAnnotation(joinPoint, Transactional.class) != null) {
     		DataSourceContextHolder.setWrite();
-    	}else if(!DataSourceType.write.getType().equals(DataSourceContextHolder.getReadOrWrite())){ 
+    	}else if(DataSourceType.read.getType().equals(DataSourceContextHolder.getReadOrWrite())){ 
     		DataSourceContextHolder.setRead();
+        }else if(DataSourceType.write.getType().equals(DataSourceContextHolder.getReadOrWrite())){
+    		DataSourceContextHolder.setWrite();
     	}else {
             // 根据方法名称来判断使用主库还是从库
             boolean flg = checkSwitchSlave(joinPoint.getSignature().getName());
@@ -82,28 +84,30 @@ private static Logger log = LoggerFactory.getLogger(DataSourceAopInService.class
 	    
 	}
 	
-	@Before("execution(* com.springboot.three.service..*.*(..)) "
-			+ " and @annotation(com.springboot.three.annotation.WriteDataSource) ")
-	public void setWriteDataSourceType(JoinPoint joinPoint) {
-        try {
-                // 获取强制指定访问的数据库注解
-        	if (getAnnotation(joinPoint, Transactional.class) != null) {
-        		DataSourceContextHolder.setWrite();
-        	}else {
-                // 根据方法名称来判断使用主库还是从库
-                boolean flg = checkSwitchSlave(joinPoint.getSignature().getName());
-                if (flg) {
-                    // 从库
-                	DataSourceContextHolder.setRead();
-                } else {
-                    // 主库
-                	DataSourceContextHolder.setWrite();
-                }
-        	}
-        } catch (Throwable e) {
-        	log.error("before " + joinPoint + "\t with exception : " + e.getMessage());
-        }
-	}
+//	@Before("execution(* com.springboot.three.service..*.*(..)) "
+//			+ " or @annotation(com.springboot.three.annotation.WriteDataSource) ")
+//	public void setWriteDataSourceType(JoinPoint joinPoint) {
+//        try {
+//                // 获取强制指定访问的数据库注解
+//        	if (getAnnotation(joinPoint, Transactional.class) != null) {
+//        		DataSourceContextHolder.setWrite();
+//        	}else if(!DataSourceType.write.getType().equals(DataSourceContextHolder.getReadOrWrite())){
+//        		DataSourceContextHolder.setRead();
+//        	}else {
+//                // 根据方法名称来判断使用主库还是从库
+//                boolean flg = checkSwitchSlave(joinPoint.getSignature().getName());
+//                if (flg) {
+//                    // 从库
+//                	DataSourceContextHolder.setRead();
+//                } else {
+//                    // 主库
+//                	DataSourceContextHolder.setWrite();
+//                }
+//        	}
+//        } catch (Throwable e) {
+//        	log.error("before " + joinPoint + "\t with exception : " + e.getMessage());
+//        }
+//	}
     
 	@Override
 	public int getOrder() {
