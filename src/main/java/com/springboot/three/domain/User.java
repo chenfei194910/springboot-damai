@@ -3,9 +3,9 @@ package com.springboot.three.domain;
 public class User {
 
 	private String id;
-	
+
 	private String userName;
-	
+
 	public String getId() {
 		return id;
 	}
@@ -22,5 +22,4 @@ public class User {
 		this.userName = userName;
 	}
 
-	
 }

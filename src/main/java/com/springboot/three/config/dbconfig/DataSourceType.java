@@ -2,17 +2,16 @@ package com.springboot.three.config.dbconfig;
 
 public enum DataSourceType {
 
-	read("read", "从库"),
-	write("write", "主库");
-	
-    private String type;
-    
-    private String name;
+	read("read", "从库"), write("write", "主库");
 
-    DataSourceType(String type, String name) {
-        this.type = type;
-        this.name = name;
-    }
+	private String type;
+
+	private String name;
+
+	DataSourceType(String type, String name) {
+		this.type = type;
+		this.name = name;
+	}
 
 	public String getType() {
 		return type;
@@ -29,5 +28,5 @@ public enum DataSourceType {
 	public void setName(String name) {
 		this.name = name;
 	}
-    
+
 }

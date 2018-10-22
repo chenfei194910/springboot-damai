@@ -14,11 +14,11 @@ public interface UserMapper {
 
 	@Insert("insert sys_user(id,username) values(#{id},#{userName})")
 	void insert(User u);
-	
+
 	@Select("select id,username from sys_user where id=#{id} ")
-	User findById(@Param("id")String id);
-	
-	//注：方法名和要UserMapper.xml中的id一致
-	List<User> query(@Param("userName")String userName);
-	
+	User findById(@Param("id") String id);
+
+	// 注：方法名和要UserMapper.xml中的id一致
+	List<User> query(@Param("userName") String userName);
+
 }
