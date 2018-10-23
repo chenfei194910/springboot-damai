@@ -7,10 +7,10 @@ server:
 
 
 mybatis:
-     mapperLocations: classpath:/com/springboot/three/dao/*.xml
-     typeAliasesPackage: com.springboot.three.dao
-     mapperScanPackage: com.springboot.three.dao
-     configLocation: classpath:/mybatis-config.xml
+  mapperLocations: classpath:/com/springboot/three/dao/*.xml
+  typeAliasesPackage: com.springboot.three.dao
+  mapperScanPackage: com.springboot.three.dao
+  configLocation: classpath:/mybatis-config.xml
 
 mysql:
     datasource:
@@ -74,4 +74,4 @@ mysql:
            poolPreparedStatements: true
            maxPoolPreparedStatementPerConnectionSize: 50
            removeAbandoned: true
-           filters: stat  
+           filters: stat     
