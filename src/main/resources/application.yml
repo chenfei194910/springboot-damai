@@ -1,5 +1,5 @@
 logging:
-  config: classpath:logback.xml
+  config: classpath:log4j2.xml
   path: f:/logs
 server:
   port: 80

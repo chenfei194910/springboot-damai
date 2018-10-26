@@ -8,11 +8,11 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+//@EnableAdminServer
 @EnableAutoConfiguration
 @EnableTransactionManagement(order = 10) // 开启事务，并设置order值，默认是Integer的最大值
 @ComponentScan(basePackages = { "com.springboot.three" })
 @SpringBootApplication
-//@EnableAdminServer
 public class Application extends SpringBootServletInitializer {
 
 	@Override
