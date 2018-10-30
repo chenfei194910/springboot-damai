@@ -1,14 +1,10 @@
-spring:
-  profiles:
-    active: dev
-
+#开发环境
 logging:
   config: classpath:log4j2.xml
   path: f:/logs
 server:
   port: 80
   session-timeout: 60
-
 
 mybatis:
   mapperLocations: classpath:/com/springboot/three/dao/*.xml
