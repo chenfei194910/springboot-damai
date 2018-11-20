@@ -32,7 +32,7 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		
-		<dependency>
+ 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
@@ -66,10 +66,17 @@
 		    </exclusions>
 		</dependency>
 
+
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
+
+<dependency>
+   <groupId>com.lmax</groupId>
+   <artifactId>disruptor</artifactId>
+   <version>3.4.1</version>
+  </dependency>
 
 		<dependency>
 			<groupId>mysql</groupId>
@@ -132,6 +139,10 @@
 
 	<build>
 		<plugins>
+		            <!-- 添加spring-boot-maven-plugin插件
+            作用:该插件支持多种功能，常用的有两种，第一种是打包项目为可执行的jar包,另外
+                一个命令就是mvn spring-boot:run，可以直接使用tomcat（默认）启动项目。
+            -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
