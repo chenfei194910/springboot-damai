@@ -79,7 +79,7 @@ mysql:
 #redis配置
 redis:
 #  数据库索引
-    database: 0
+    database: damai
 #    服务器地址
     host: 127.0.0.1
 #    服务器连接端口

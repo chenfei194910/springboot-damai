@@ -16,7 +16,6 @@ public class RedisAutoTest {
 
     @Test
     public void save(){
-
         stringRedisTemplate.opsForValue().set("zzp","big z");
         Assert.assertEquals("big z",stringRedisTemplate.opsForValue().get("zzp"));
     }
