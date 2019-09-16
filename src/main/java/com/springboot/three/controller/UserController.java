@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
-import com.springboot.three.config.dbconfig.MybatisConfiguration;
 import com.springboot.three.domain.User;
 import com.springboot.three.service.UserService;
 
