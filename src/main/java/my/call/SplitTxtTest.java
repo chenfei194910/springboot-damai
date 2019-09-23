@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,9 +24,15 @@ public class SplitTxtTest {
 	        ArrayList<String> companyList = POITest.readCompanyList(); //所有上市公司的名字
 	        logger.info("共{}家上市公司",companyList.size());
 	        List<String> appearList = new ArrayList<String>(); //整个研报中推荐的上市公司
+	        Map<String,String> stockMap = new HashMap<String,String>(); //map（ key:上市公司，value:证券1，证券2，证券3 ）
 	        //遍历每家的晨报
 	        for (int i = 0; i < eachMorningCall.length; i++) {
 	        	String morningCall = eachMorningCall[i]; //每家晨报的内容
+	        	if(StringUtils.isBlank(morningCall)) {
+	        		continue;
+	        	}
+//	        	morningCall.indexOf("sss")
+	        	String stock = morningCall.substring(morningCall.lastIndexOf("sss")+3, morningCall.indexOf("eee"));
 	        	
 		        for (int j = 0; j < companyList.size(); j++) {
 		        	String compName= companyList.get(j); //上市公司名字
@@ -33,6 +40,9 @@ public class SplitTxtTest {
 		        	Integer countNum = morningCall.indexOf(compName); 
 		        	if (countNum != -1) {
 		        		appearList.add(compName);
+		        		
+		        		String stockName = stockMap.get(compName);
+		        		stockMap.put(compName, StringUtils.isEmpty(stockName) ? stock : new StringBuilder(stockName).append(",").append(stock).toString());
 		        	}
 				}
 			}
@@ -41,6 +51,7 @@ public class SplitTxtTest {
     		Map<String, String> excelTitleMap=new HashMap<String, String>(); //excel标题
     		excelTitleMap.put("compName", "公司名称");
     		excelTitleMap.put("countNum", "推荐的家数");
+    		excelTitleMap.put("stock", "推荐公司");
 	        list.add(excelTitleMap);
 	        
 	        Map<String, Integer> compMap = new HashMap<String, Integer>();
@@ -53,13 +64,19 @@ public class SplitTxtTest {
 	        sorted = sortByValue(compMap);
 	        for(Map.Entry<String, Integer> entry : sorted.entrySet()) {
 	        	Map<String, String> dataMap=new HashMap<String, String>();
-	        	dataMap.put("compName", entry.getKey());
+	        	String compName = entry.getKey();
+	        	dataMap.put("compName", compName);
 	        	dataMap.put("countNum", String.valueOf(entry.getValue()));
+	        	
+	        	if(StringUtils.isNotBlank(stockMap.get(compName))) {
+	        		dataMap.put("stock", stockMap.get(compName));
+	        	}
+	        	
 	        	list.add(dataMap);	        	
 	        }
 	        
 	        //结果输出到excel
-	        WriteExcel.writeExcel(list, 2, "E://stock//writeExcel.xlsx");
+	        WriteExcel.writeExcel(list, 3, "E://stock//writeExcel.xlsx");
 
 	    }
 	 

@@ -60,19 +60,27 @@ public class WriteExcel {
 	             */
 	            for (int j = 0; j < dataList.size(); j++) {
 	                // 创建一行：从第二行开始，跳过属性列
-	                Row row = sheet.createRow(j + 1);
+	                Row row = sheet.createRow(j);
 	                // 得到要插入的每一条记录
 	                Map dataMap = dataList.get(j);
 	                String name = dataMap.get("compName").toString();
-	                String address = dataMap.get("countNum").toString();
+	                String countNum = dataMap.get("countNum").toString();
+	                String stock = dataMap.get("stock").toString();
 	                for (int k = 0; k <= columnNumCount; k++) {
-	                // 在一行内循环
-	                Cell first = row.createCell(0);
-	                first.setCellValue(name);
-	        
-	                Cell second = row.createCell(1);
-	                second.setCellValue(address);
+		                // 在一行内循环
+		                Cell first = row.createCell(0);
+		                first.setCellValue(name);
+		        
+		                Cell second = row.createCell(1);
+		                second.setCellValue(countNum);
+		                
+		                Cell three = row.createCell(2);
+		                three.setCellValue(stock);
+	                
 	                }
+	                
+	                sheet.createRow(j + 1);
+	                
 	            }
 	            // 创建文件输出流，准备输出电子表格：这个必须有，否则你在sheet上做的任何操作都不会有效
 	            out =  new FileOutputStream(finalXlsxPath);
